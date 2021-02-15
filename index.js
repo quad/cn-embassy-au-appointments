@@ -40,7 +40,7 @@
        * isNotHandled && isFlag (疫情期间曾预约但未办理)
        * isCrossArea (不允许跨领区预约)
        */
-      .filter(p => (p.age >= p.limitOne) && (p.userNumber < p.peopleNumber))
+      .filter(p => (p.limitOne === undefined || p.age <= p.limitOne) && (p.userNumber < p.peopleNumber))
       .map(p => ({date, start: p.startTime, end: p.endTime, orgName, remain: p.userNumber, total: p.peopleNumber}))
   )
 
@@ -63,6 +63,4 @@
         .map(a => `${a.date} ${a.start} - ${a.end} @ ${a.orgName} (${a.remain} / ${a.total} left)`)
         .join("\n"),
       })
-
-  console.log(`${appointments.length} appointments`)
 })()
