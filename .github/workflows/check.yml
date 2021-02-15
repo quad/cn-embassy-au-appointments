@@ -3,7 +3,7 @@ name: CN Embassy AU Appointments Check
 on:
   workflow_dispatch:
   schedule:
-    - cron: "5 * * * 1-5"
+    - cron: "5 * * * 0-5"
 
 jobs:
   check:
