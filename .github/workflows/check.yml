@@ -1,0 +1,22 @@
+name: Appointment Check
+
+on:
+  schedule:
+    - cron: "5 * * * 1-5"
+
+jobs:
+  check:
+    name: Check the embassy for open appointments
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - name: Run appointment checker
+        run: node index.js
+        with:
+          record_number: ${{secrets.RECORD_NUMBER}}
+          record_auth_answer: ${{secrets.RECORD_AUTH_ANSWER}}
+          mail_username: ${{secrets.MAIL_USERNAME}}
+          mail_password: ${{secrets.MAIL_PASSWORD}}
+          mail_to: ${{secrets.MAIL_TO}}
