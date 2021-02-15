@@ -1,4 +1,4 @@
-name: Appointment Check
+name: CN Embassy AU Appointments Check
 
 on:
   workflow_dispatch:
@@ -7,14 +7,13 @@ on:
 
 jobs:
   check:
-    name: Check the embassy for open appointments
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
-      - name: Run appointment checker
-        run: node index.js
+      - run: npm ci
+      - run: node index.js
         env:
           INPUT_RECORD_NUMBER: ${{secrets.RECORD_NUMBER}}
           INPUT_RECORD_AUTH_ANSWER: ${{secrets.RECORD_AUTH_ANSWER}}
