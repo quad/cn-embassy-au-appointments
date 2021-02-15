@@ -7,6 +7,7 @@ on:
 
 jobs:
   check:
+    environment: production
     runs-on: ubuntu-latest
 
     steps:
@@ -15,8 +16,8 @@ jobs:
       - run: npm ci
       - run: node index.js
         env:
-          INPUT_RECORD_NUMBER: ${{secrets.RECORD_NUMBER}}
-          INPUT_RECORD_AUTH_ANSWER: ${{secrets.RECORD_AUTH_ANSWER}}
-          INPUT_MAIL_USERNAME: ${{secrets.MAIL_USERNAME}}
-          INPUT_MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
-          INPUT_MAIL_TO: ${{secrets.MAIL_TO}}
+          INPUT_RECORD_NUMBER: ${{ secrets.RECORD_NUMBER }}
+          INPUT_RECORD_AUTH_ANSWER: ${{ secrets.RECORD_AUTH_ANSWER }}
+          INPUT_MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+          INPUT_MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          INPUT_MAIL_TO: ${{ secrets.MAIL_TO }}
