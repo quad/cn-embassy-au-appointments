@@ -14,9 +14,9 @@ jobs:
       - uses: actions/setup-node@v1
       - name: Run appointment checker
         run: node index.js
-        with:
-          record_number: ${{secrets.RECORD_NUMBER}}
-          record_auth_answer: ${{secrets.RECORD_AUTH_ANSWER}}
-          mail_username: ${{secrets.MAIL_USERNAME}}
-          mail_password: ${{secrets.MAIL_PASSWORD}}
-          mail_to: ${{secrets.MAIL_TO}}
+        env:
+          INPUT_RECORD_NUMBER: ${{secrets.RECORD_NUMBER}}
+          INPUT_RECORD_AUTH_ANSWER: ${{secrets.RECORD_AUTH_ANSWER}}
+          INPUT_MAIL_USERNAME: ${{secrets.MAIL_USERNAME}}
+          INPUT_MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
+          INPUT_MAIL_TO: ${{secrets.MAIL_TO}}
