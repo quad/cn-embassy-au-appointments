@@ -12,7 +12,7 @@
     querystring.stringify({
       recordNumber: core.getInput('record_number', { required: true }),
       questionID: '1193724fcf8041a4b627467826ebd77b', // 您父亲的姓名？
-      answer: core.getInput('record_auth_answer', { required: true }),
+      answer: core.getInput('record_auth_answer', { required: true })
     })
   )
   assert.equal(loginResponse.status, 200)
@@ -30,7 +30,7 @@
   assert.equal(scheduleResponse.data.status, 0)
 
   const schedule = scheduleResponse.data.data
-  const appointments = schedule.flatMap(({date, orgName, periodOfTimeList}) =>
+  const appointments = schedule.flatMap(({ date, orgName, periodOfTimeList }) =>
     periodOfTimeList
       /*
        * age <= limitOne (岁以下)
@@ -41,26 +41,27 @@
        * isCrossArea (不允许跨领区预约)
        */
       .filter(p => (p.limitOne === undefined || p.age <= p.limitOne) && (p.userNumber < p.peopleNumber))
-      .map(p => ({date, start: p.startTime, end: p.endTime, orgName, remain: p.userNumber, total: p.peopleNumber}))
+      .map(p => ({ date, start: p.startTime, end: p.endTime, orgName, remain: p.userNumber, total: p.peopleNumber }))
   )
 
   if (appointments.length === 0) return
 
   await nodemailer
     .createTransport({
-      host: "smtp.fastmail.com",
+      host: 'smtp.fastmail.com',
       port: 465,
       secure: true,
       auth: {
         user: core.getInput('mail_username', { required: true }),
-        pass: core.getInput('mail_password', { required: true }),
-      }})
+        pass: core.getInput('mail_password', { required: true })
+      }
+    })
     .sendMail({
       from: 'scott+embassybot@quadhome.com',
       to: core.getInput('mail_to', { required: true }),
       subject: 'Hourly Embassy Check',
       text: appointments
         .map(a => `${a.date} ${a.start} - ${a.end} @ ${a.orgName} (${a.remain} / ${a.total} left)`)
-        .join("\n"),
-      })
+        .join('\n')
+    })
 })()
